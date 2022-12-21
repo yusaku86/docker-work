@@ -1,0 +1,31 @@
+version "3"
+
+services:
+  local-db:
+    image: mysql:8.0-debian
+    networks:
+      - local-net
+    volumes:
+      - local_volume:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: myrootpassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: test_user
+      MYSQL_PASSWORD: mypassword
+
+  local-app:
+    depends_on:
+      - local-db
+    image: amazonlinux-httpd
+    networks:
+      - local-net
+    ports:
+      - 8080:80
+    restart: always
+
+networks:
+  local-net
+
+volumes:
+  local_volume
