@@ -1,0 +1,7 @@
+FROM amazonlinux
+EXPOSE 80
+RUN yum update \
+&& yum install -y httpd:2,4 php:8.1 \
+&& yum clean all \
+&& rm -rf /var/lib/apt/lists/* \
+CMD /usr/sbin/apachtectl -DFORGROUND
